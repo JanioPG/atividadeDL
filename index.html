@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+    </script>
+    <!-- Google Tag Manager -->
+    <!-- part of the snippet here.-->
+    <!-- End Google Tag Manager -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qual a idade</title>
+</head>
+<body>
+    <h1>Quantos anos eu tenho?</h1>
+    <input id="name" />
+    <button id="send">ENVIAR</button>
+    <h2 id="response"></h2>
+
+    <script>
+        const sendButton = document.querySelector("button[id=send]")
+
+        sendButton.addEventListener("click", getAge)
+
+        async function getAge() {
+            try {
+                // parte II
+                const NAME = document.querySelector("input[id=name]").value;
+                const URL = `https://api.agify.io?name=${NAME}`
+                /*const response = await fetch(URL)
+                  const jsonData = await response.json() */
+                const jsonData = await fetch(URL).then((response) => response.json())
+
+                // parte II
+                dataLayer.push({
+                    event: 'guessAge',
+                    age: `${jsonData.age}`,
+                    name: `${jsonData.name}`
+                });
+
+            } catch (error) {
+                console.log(`Error: ${error}`);
+            } finally {
+                console.log("Finished the test with the request!")
+            }
+        }
+    </script>
+</body>
+</html>
